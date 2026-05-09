@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Leo Studio Barber – Cortes, barbas e estilo para o homem moderno." />
+  <title>Leo Studio Barber</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f0eb;
+      --red: #c0001a;
+      --gold: #c9a84c;
+      --gold-light: #e8c96a;
+      --gray-dark: #1a1a1a;
+      --gray-mid: #2e2e2e;
+      --font-display: 'Playfair Display', serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 5%;
+      background: rgba(10,10,10,0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      transition: opacity 0.2s, color 0.2s;
+    }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+    .nav-cta {
+      background: var(--red);
+      color: var(--white) !important;
+      padding: 0.5rem 1.2rem !important;
+      border-radius: 2px;
+      opacity: 1 !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: #a30016 !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8rem 5% 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(135deg, rgba(192,0,26,0.08) 0%, transparent 50%),
+        linear-gradient(to right, rgba(10,10,10,0.95) 40%, transparent 100%),
+        url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1400&q=80') center/cover no-repeat;
+      z-index: 0;
+    }
+    .hero-accent {
+      position: absolute;
+      right: -60px; top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-display);
+      font-size: clamp(10rem, 20vw, 22rem);
+      font-weight: 900;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(201,168,76,0.07);
+      pointer-events: none;
+      z-index: 1;
+      user-select: none;
+    }
+    .hero-content { position: relative; z-index: 2; max-width: 650px; }
+    .hero-badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.35rem 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.2rem;
+    }
+    .hero-title span { color: var(--gold); }
+    .hero-sub {
+      font-size: 1.05rem;
+      opacity: 0.7;
+      max-width: 420px;
+      margin-bottom: 2.5rem;
+    }
+    .hero-buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      padding: 0.9rem 2.2rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: #a30016; transform: translateY(-2px); }
+    .btn-outline {
+      border: 1px solid rgba(201,168,76,0.6);
+      color: var(--gold);
+      padding: 0.9rem 2.2rem;
+      font-size: 0.85rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(201,168,76,0.08); }
+    .hero-strip {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--red), var(--gold), var(--red));
+      z-index: 2;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 6rem 5%; }
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .divider {
+      width: 48px; height: 3px;
+      background: linear-gradient(to right, var(--red), var(--gold));
+      margin-bottom: 3rem;
+    }
+
+    /* ── SERVIÇOS ── */
+    #servicos { background: var(--gray-dark); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.5px;
+    }
+    .service-card {
+      background: var(--gray-mid);
+      padding: 2.5rem 2rem;
+      border-top: 3px solid transparent;
+      transition: border-color 0.25s, background 0.25s;
+      cursor: default;
+    }
+    .service-card:hover { border-color: var(--gold); background: #262626; }
+    .service-icon {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .service-desc { font-size: 0.88rem; opacity: 0.6; margin-bottom: 1.2rem; }
+    .service-price {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--gold);
+    }
+    .service-price span { font-size: 0.8rem; opacity: 0.6; }
+
+    /* ── SOBRE ── */
+    #sobre {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: center;
+    }
+    .sobre-img-wrap {
+      position: relative;
+    }
+    .sobre-img {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+    .sobre-badge {
+      position: absolute;
+      bottom: -1.5rem; right: -1.5rem;
+      background: var(--red);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .sobre-badge strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      color: var(--white);
+      line-height: 1;
+    }
+    .sobre-badge span { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.85; }
+    .sobre-text p { opacity: 0.75; margin-bottom: 1rem; font-size: 0.95rem; }
+    .sobre-stats {
+      display: flex; gap: 2rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .stat strong {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--gold);
+    }
+    .stat span { font-size: 0.8rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ── GALERIA ── */
+    #galeria { background: var(--gray-dark); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: 280px 280px;
+      gap: 4px;
+    }
+    .gallery-item {
+      overflow: hidden;
+      position: relative;
+    }
+    .gallery-item:first-child { grid-row: span 2; }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.06); }
+    .gallery-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(10,10,10,0.7) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      display: flex; align-items: flex-end;
+      padding: 1.2rem;
+    }
+    .gallery-item:hover .gallery-overlay { opacity: 1; }
+    .gallery-overlay span { font-size: 0.82rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; }
+
+    /* ── AGENDAMENTO ── */
+    #agendamento {
+      text-align: center;
+      background: var(--black);
+    }
+    #agendamento .divider { margin: 0 auto 3rem; }
+    .agendamento-intro { max-width: 550px; margin: 0 auto 3rem; opacity: 0.7; }
+    .form-embed-container {
+      max-width: 720px;
+      margin: 0 auto;
+      background: var(--gray-dark);
+      border: 1px solid rgba(201,168,76,0.2);
+      padding: 0.5rem;
+    }
+    /* Substitua o iframe abaixo pelo seu Google Form */
+    .form-placeholder {
+      background: var(--gray-mid);
+      height: 520px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.9rem;
+    }
+    .form-placeholder .icon { font-size: 2.5rem; opacity: 0.4; }
+    .form-placeholder strong { color: var(--gold); opacity: 1; font-size: 1rem; }
+
+    /* ── CONTATO ── */
+    #contato { background: var(--gray-dark); }
+    .contato-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: start;
+    }
+    .contato-info { display: flex; flex-direction: column; gap: 2rem; }
+    .contato-item { display: flex; gap: 1.2rem; align-items: flex-start; }
+    .contato-icon {
+      width: 44px; height: 44px;
+      border: 1px solid rgba(201,168,76,0.4);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.1rem;
+    }
+    .contato-item h4 { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; }
+    .contato-item p { font-size: 0.9rem; opacity: 0.75; }
+    .map-embed {
+      width: 100%; height: 320px;
+      border: 1px solid rgba(201,168,76,0.2);
+      background: var(--gray-mid);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.85rem;
+      flex-direction: column; gap: 0.5rem;
+    }
+    .social-links { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    .social-link {
+      width: 40px; height: 40px;
+      border: 1px solid rgba(255,255,255,0.2);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-link:hover { border-color: var(--gold); color: var(--gold); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #050505;
+      text-align: center;
+      padding: 2.5rem 5%;
+      border-top: 1px solid rgba(201,168,76,0.15);
+    }
+    .footer-logo { font-family: var(--font-display); font-size: 1.6rem; color: var(--gold); margin-bottom: 0.5rem; }
+    .footer-copy { font-size: 0.78rem; opacity: 0.35; letter-spacing: 0.05em; }
+    .footer-strip {
+      height: 3px;
+      background: linear-gradient(to right, var(--red), var(--gold), var(--red));
+      margin-bottom: 2rem;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      #sobre { grid-template-columns: 1fr; }
+      .sobre-img-wrap { max-width: 480px; }
+      .sobre-badge { right: 0; }
+      .contato-grid { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .gallery-item:first-child { grid-row: span 1; }
+    }
+    @media (max-width: 640px) {
+      nav { padding: 1rem 4%; }
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .sobre-stats { gap: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="Menu principal">
+  <a href="#hero" class="nav-logo" aria-label="Leo Studio Barber – página inicial">Leo Studio Barber</a>
+  <ul class="nav-links" role="list">
+    <li><a href="#servicos">Serviços</a></li>
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#galeria">Galeria</a></li>
+    <li><a href="#agendamento" class="nav-cta">Agendar</a></li>
+  </ul>
+  <button class="hamburger" aria-label="Abrir menu" aria-expanded="false" onclick="toggleMenu(this)">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section id="hero" aria-label="Apresentação">
+  <div class="hero-bg" role="img" aria-label="Ambiente da barbearia"></div>
+  <div class="hero-accent" aria-hidden="true">LEO</div>
+  <div class="hero-content">
+    <div class="hero-badge" aria-label="Desde 2015">Est. 2015 · São Paulo</div>
+    <h1 class="hero-title">
+      Estilo que<br/><span>define</span><br/>quem você é
+    </h1>
+    <p class="hero-sub">Cortes precisos, barbas impecáveis e uma experiência que vai além da cadeira.</p>
+    <div class="hero-buttons">
+      <a href="#agendamento" class="btn-primary">Agendar Horário</a>
+      <a href="#servicos" class="btn-outline">Ver Serviços</a>
+    </div>
+  </div>
+  <div class="hero-strip" aria-hidden="true"></div>
+</section>
+
+<!-- SERVIÇOS -->
+<section id="servicos" aria-labelledby="servicos-title">
+  <p class="section-label reveal">O que oferecemos</p>
+  <h2 class="section-title reveal" id="servicos-title">Nossos Serviços</h2>
+  <div class="divider reveal" role="presentation"></div>
+  <div class="services-grid" role="list">
+
+    <article class="service-card reveal" role="listitem">
+      <span class="service-icon" aria-hidden="true">✂️</span>
+      <h3 class="service-name">Corte Masculino</h3>
+      <p class="service-desc">Degradê, navalhado, social ou despojado — do seu jeito.</p>
+      <p class="service-price">R$ 45 <span>/ sessão</span></p>
+    </article>
+
+    <article class="service-card reveal" role="listitem">
+      <span class="service-icon" aria-hidden="true">🪒</span>
+      <h3 class="service-name">Barba Completa</h3>
+      <p class="service-desc">Modelagem, hidratação e acabamento com toalha quente.</p>
+      <p class="service-price">R$ 35 <span>/ sessão</span></p>
+    </article>
+
+    <article class="service-card reveal" role="listitem">
+      <span class="service-icon" aria-hidden="true">💎</span>
+      <h3 class="service-name">Combo Premium</h3>
+      <p class="service-desc">Corte + barba + sobrancelha. Experiência completa.</p>
+      <p class="service-price">R$ 75 <span>/ sessão</span></p>
+    </article>
+
+    <article class="service-card reveal" role="listitem">
+      <span class="service-icon" aria-hidden="true">👦</span>
+      <h3 class="service-name">Corte Infantil</h3>
+      <p class="service-desc">Para os pequenos, com toda paciência e cuidado.</p>
+      <p class="service-price">R$ 30 <span>/ sessão</span></p>
+    </article>
+
+    <article class="service-card reveal" role="listitem">
+      <span class="service-icon" aria-hidden="true">💆</span>
+      <h3 class="service-name">Relaxamento Capilar</h3>
+      <p class="service-desc">Tratamento profissional para cabelos grossos e volumosos.</p>
+      <p class="service-price">R$ 60 <span>/ sessão</span></p>
+    </article>
+
+    <article class="service-card reveal" role="listitem">
+      <span class="service-icon" aria-hidden="true">🎨</span>
+      <h3 class="service-name">Coloração</h3>
+      <p class="service-desc">Mechas, luzes ou coloração total com produtos premium.</p>
+      <p class="service-price">R$ 80 <span>/ sessão</span></p>
+    </article>
+
+  </div>
+</section>
+
+<!-- SOBRE -->
+<section id="sobre" aria-labelledby="sobre-title">
+  <div class="sobre-img-wrap reveal">
+    <img
+      class="sobre-img"
+      src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=700&q=80"
+      alt="Barbeiro Leo trabalhando com precisão em um cliente"
+      loading="lazy"
+    />
+    <div class="sobre-badge" aria-label="10 anos de experiência">
+      <strong>10+</strong>
+      <span>anos de experiência</span>
+    </div>
+  </div>
+  <div class="sobre-text reveal">
+    <p class="section-label">Nossa história</p>
+    <h2 class="section-title" id="sobre-title">Mais que uma barbearia.<br/>Um estilo de vida.</h2>
+    <div class="divider" role="presentation"></div>
+    <p>A Leo Studio Barber nasceu da paixão pelo ofício e pelo respeito ao cliente. Em 2015, Leo abriu as portas com uma cadeira e um sonho: oferecer cortes de excelência num ambiente acolhedor e descontraído.</p>
+    <p>Hoje, somos referência em São Paulo com uma equipe de profissionais dedicados, produtos premium e um espaço pensado para que você saia não só bem aparado, mas renovado.</p>
+    <div class="sobre-stats" role="list" aria-label="Estatísticas da barbearia">
+      <div class="stat" role="listitem">
+        <strong>+5k</strong>
+        <span>clientes atendidos</span>
+      </div>
+      <div class="stat" role="listitem">
+        <strong>4</strong>
+        <span>profissionais</span>
+      </div>
+      <div class="stat" role="listitem">
+        <strong>4.9★</strong>
+        <span>avaliação média</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIA -->
+<section id="galeria" aria-labelledby="galeria-title">
+  <p class="section-label reveal">Nosso trabalho</p>
+  <h2 class="section-title reveal" id="galeria-title">Galeria</h2>
+  <div class="divider reveal" role="presentation"></div>
+  <div class="gallery-grid" role="list" aria-label="Galeria de cortes e estilos">
+
+    <div class="gallery-item reveal" role="listitem">
+      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt="Corte degradê com acabamento perfeito" loading="lazy" />
+      <div class="gallery-overlay"><span>Degradê Clássico</span></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem">
+      <img src="https://images.unsplash.com/photo-1534297635766-a262cdcb8ee4?w=600&q=80" alt="Barba modelada com navalha" loading="lazy" />
+      <div class="gallery-overlay"><span>Barba Modelada</span></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem">
+      <img src="https://images.unsplash.com/photo-1622288432450-277d0fef5ed6?w=600&q=80" alt="Corte social com penteado impecável" loading="lazy" />
+      <div class="gallery-overlay"><span>Social Premium</span></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem">
+      <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80" alt="Combo corte e barba" loading="lazy" />
+      <div class="gallery-overlay"><span>Combo Completo</span></div>
+    </div>
+    <div class="gallery-item reveal" role="listitem">
+      <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=600&q=80" alt="Interior elegante da barbearia" loading="lazy" />
+      <div class="gallery-overlay"><span>Nosso Espaço</span></div>
+    </div>
+
+  </div>
+</section>
+
+<!-- AGENDAMENTO -->
+<section id="agendamento" aria-labelledby="agendamento-title">
+  <p class="section-label reveal">Reserve seu horário</p>
+  <h2 class="section-title reveal" id="agendamento-title">Agendamento Online</h2>
+  <div class="divider reveal" role="presentation"></div>
+  <p class="agendamento-intro reveal">Preencha o formulário abaixo e entraremos em contato para confirmar seu horário. Fácil, rápido e sem filas.</p>
+
+  <div class="form-embed-container reveal">
+    <!--
+      INSTRUÇÃO PARA O WEBFLOW / TRABALHO:
+      Substitua este bloco pelo embed do seu Google Form.
+      No Google Forms: Enviar > ícone < > > copie o código iframe
+      Cole aqui substituindo o div.form-placeholder abaixo.
+
+      Exemplo:
+      <iframe
+        src="https://docs.google.com/forms/d/e/SEU_ID_AQUI/viewform?embedded=true"
+        width="100%" height="520" frameborder="0" marginheight="0" marginwidth="0"
+        title="Formulário de agendamento Leo Studio Barber"
+        aria-label="Formulário de agendamento">Carregando…</iframe>
+    -->
+    <div class="form-placeholder" role="region" aria-label="Área do formulário de agendamento">
+      <div class="icon" aria-hidden="true">📋</div>
+      <strong>Cole aqui o embed do Google Forms</strong>
+      <p>Vá em Google Forms → Enviar → ícone &lt;&gt; → copie o iframe</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato" aria-labelledby="contato-title">
+  <p class="section-label reveal">Fale conosco</p>
+  <h2 class="section-title reveal" id="contato-title">Contato & Localização</h2>
+  <div class="divider reveal" role="presentation"></div>
+  <div class="contato-grid">
+    <div class="contato-info reveal">
+
+      <div class="contato-item">
+        <div class="contato-icon" aria-hidden="true">📍</div>
+        <div>
+          <h4>Endereço</h4>
+          <p>Rua das Palmeiras, 245 – Vila Madalena<br/>São Paulo – SP, 05434-010</p>
+        </div>
+      </div>
+
+      <div class="contato-item">
+        <div class="contato-icon" aria-hidden="true">🕐</div>
+        <div>
+          <h4>Horário de Funcionamento</h4>
+          <p>Seg – Sex: 9h às 20h<br/>Sábado: 8h às 18h<br/>Domingo: Fechado</p>
+        </div>
+      </div>
+
+      <div class="contato-item">
+        <div class="contato-icon" aria-hidden="true">📞</div>
+        <div>
+          <h4>Telefone / WhatsApp</h4>
+          <p><a href="tel:+5511999999999" style="color:var(--gold); text-decoration:none;">(11) 99999-9999</a></p>
+        </div>
+      </div>
+
+      <div class="contato-item">
+        <div class="contato-icon" aria-hidden="true">✉️</div>
+        <div>
+          <h4>E-mail</h4>
+          <p><a href="mailto:contato@leostudiobarber.com" style="color:var(--gold); text-decoration:none;">contato@leostudiobarber.com</a></p>
+        </div>
+      </div>
+
+      <nav aria-label="Redes sociais">
+        <div class="social-links">
+          <a href="#" class="social-link" aria-label="Instagram da Leo Studio Barber">IG</a>
+          <a href="#" class="social-link" aria-label="Facebook da Leo Studio Barber">FB</a>
+          <a href="#" class="social-link" aria-label="WhatsApp da Leo Studio Barber">WA</a>
+        </div>
+      </nav>
+    </div>
+
+    <div class="reveal">
+      <!--
+        INSTRUÇÃO: Substitua este bloco pelo embed do Google Maps.
+        Google Maps → Share → Embed a map → copie o iframe
+      -->
+      <div class="map-embed" role="region" aria-label="Mapa de localização">
+        <span aria-hidden="true" style="font-size:2rem;opacity:0.3">🗺️</span>
+        <span>Cole aqui o embed do Google Maps</span>
+        <small>Maps → Compartilhar → Incorporar mapa → copie o iframe</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-strip" aria-hidden="true"></div>
+  <p class="footer-logo">Leo Studio Barber</p>
+  <p class="footer-copy">© 2025 Leo Studio Barber · Todos os direitos reservados · Desenvolvido com Webflow</p>
+</footer>
+
+<script>
+  /* Scroll Reveal */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* Hamburger menu (mobile) */
+  function toggleMenu(btn) {
+    const links = document.querySelector('.nav-links');
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    links.style.display = expanded ? 'none' : 'flex';
+    links.style.flexDirection = 'column';
+    links.style.position = 'absolute';
+    links.style.top = '64px';
+    links.style.left = '0';
+    links.style.right = '0';
+    links.style.background = 'rgba(10,10,10,0.97)';
+    links.style.padding = '1.5rem 5%';
+    links.style.gap = '1.5rem';
+  }
+</script>
+</body>
+</html>
